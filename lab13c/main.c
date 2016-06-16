@@ -7,26 +7,12 @@
 //usage: lab13c.exe <x_arg> <a_arg>
 int find_y1(int x, int a)
 {
-	if (x < 0)
-	{
-		x = abs(x);
-	}
-	else
-	{
-		x -= a;
-	}
+	(x<0)?(x = abs(a)):(x -= a);
 	return x;
 }
 int find_y2(int x, int a)
 {
-	if (abs(x) % 3 == 1)
-	{
-		x += a;
-	}
-	else
-	{
-		x = 7;
-	}
+	(abs(x) % 3 == 1)?(x+=a):(x=7);
 	return x;
 }
 int find_y1_ASM(int x, int a)
@@ -87,25 +73,34 @@ int find_y2_ASM(int x, int a)
 }
 int main(int argc, char **argv)
 {
-	int x = 0;
-	int a = 0;
-	int y = 0;
-	//x = debugValue1;
-	//a = debugValue2;
-	sscanf(argv[1], "%d", &x);
-	sscanf(argv[2],"%d",&a);
-	//C
-	printf("Input values: x = %d, a = %d",x,a);
-	puts("");
-	//straight C
-	y = find_y1(x, a) - find_y2(x, a);
-	//y  = find_y1(x, a);
-	//y  = find_y2(x, a);
-	printf("Result computed with C: %d\n",y);
-	//embedded ASM
-	y = find_y1_ASM(x, a) - find_y2_ASM(x, a);
-	//y = find_y1_ASM(x, a);
-	//y = find_y2_ASM(x, a);
-	printf("Result computed with ASM: %d\n", y);
+	int x,y,a;
+	a = x = y = 0;
+	if ((argv[1] && argv[2]) != NULL)
+	{
+		//x = debugValue1;
+		//a = debugValue2;
+		sscanf(argv[1], "%d", &x);
+		sscanf(argv[2], "%d", &a);
+		//C
+		printf("Input values: x = %d, a = %d", x, a);
+		puts("");
+		//straight C
+		y = find_y1(x, a) - find_y2(x, a);
+		//y  = find_y1(x, a);
+		//y  = find_y2(x, a);
+		printf("Result computed with C: %d\n", y);
+		//embedded ASM
+		y = find_y1_ASM(x, a) - find_y2_ASM(x, a);
+		//y = find_y1_ASM(x, a);
+		//y = find_y2_ASM(x, a);
+		printf("Result computed with ASM: %d\n", y);
+
+	}
+	else
+	{
+		fprintf(stderr, "Insufficient number of arguments\n");
+		return 0;
+	}
+	
 	return 0;
 }
